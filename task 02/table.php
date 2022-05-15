@@ -44,12 +44,45 @@ $users = [
         ],
     ],  
 ];
+$table = "<table class='table offset-3 border border-succsses col-7 text-center text-success '>
+            <thead>
+                <tr>";
+                    foreach($users[0] AS $property=>$value){
+                        $table.= "<th>{$property}</th>";
+                    }
+$table.=        "</tr>
+            </thead>
+            <tbody>";
+               foreach($users AS $index=>$user){
+                    $table .=   "<tr>";
+                        foreach($user AS $property => $value) {
+                            $table .=   "<td>";
+                            if(gettype($value) == 'array' || gettype($value) == 'object'){
+                                foreach($value AS $key => $objectOrArrayValue){
+                                    if($property == 'gender' && $key == 'gender'){
+                                        if($objectOrArrayValue == 'm')
+                                            $objectOrArrayValue = 'male';
+                                        else 
+                                            $objectOrArrayValue = 'female';
+                                    }
+                                    $table .=   $objectOrArrayValue . ', ';
+                                }
+                            }else{
+                                $table .=   $value;
+                            }
+                        } 
+                        $table .=    "</td>";
+                    $table .=    "</tr>";
+               }
+$table.=   "</tbody>
+        </table>";
+
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>task 02</title>
+    <title>task 02 Table</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -59,63 +92,17 @@ $users = [
 </head>
 
 <body>
-    <div class="container">
+<div class="container">
         <div class="row">
-            <div class="col-12 text-center text-dark mt-5 ">
+            <div class="col-12 text-center text-success mt-5 ">
                 <h4 >
-            Table
+                Dynamic Table
                 </h4>
             </div>
-            <table class="table table-light table table-striped table table-bordered">
-            <tr>
-            <th>id</th>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>Hoppies</th>
-            <th>Activities</th>
-           </tr>
+<?= $table ?>
+</div>
+</div>
 
-    <?php
-
-for($row=0; $row<1; $row++){
-echo "<tr>";
-echo "<td> {$users[0]->id} </td>";
-echo "<td> {$users[0]->name} </td>";
-echo "<td> {$users[0]->gender->gender} </td>";
-echo "<td> {$users[0]->hobbies[0]} <br> , {$users[0]->hobbies[1]} <br> , {$users[0]->hobbies[2]} </td>";
-echo "<td>{$users[0]->activities['school']} <br> ,  {$users[0]->activities['home']} </td>";
-echo "</tr>";
-
-echo "<tr>";
-echo " <td>{$users[1]->id} </td>";
-echo " <td>{$users[1]->name} </td>";
-echo " <td>{$users[1]->gender->gender} </td>";
-echo " <td>{$users[1]->hobbies[0]} <br> , {$users[1]->hobbies[1] }</td>";
-echo " <td>{$users[1]->activities['school']} <br> ,  {$users[1]->activities['home']} </td>";
-echo "</tr>";
-
-echo "<tr>";
-echo " <td>{$users[2]->id} </td>";
-echo " <td>{$users[2]->name} </td>";
-echo " <td>{$users[2]->gender->gender} </td>";
-echo "<td>{$users[2]->hobbies[0]} </td>";
-echo " <td>{$users[2]->activities['school']} <br> ,  {$users[2]->activities['home']} </td>";
-echo "</tr>";
-}
-// $needle ='m';
-// foreach($users as $property => $gender) {
-//     if($needle == $gender) {
-//   echo "Male";
-// }else {
-// echo "Female";
-// }
-// }
-?>
-           </table>
-               </div>
-            </div>
-    
-    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
